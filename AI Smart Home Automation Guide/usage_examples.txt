@@ -1,0 +1,28 @@
+// Example commands to test the system:
+
+1. Control Lights:
+   - "Turn on the lights"
+   - "Set brightness to 50%"
+   - "Turn off the lights"
+   - "Change lights to blue"
+
+2. Control Temperature:
+   - "Set temperature to 72 degrees"
+   - "Turn on heating"
+   - "Turn off AC"
+
+3. Control Doors:
+   - "Lock the front door"
+   - "Unlock the door"
+   - "Check door status"
+
+4. Control Speakers:
+   - "Play music"
+   - "Set volume to 60%"
+   - "Pause music"
+   - "Stop playback"
+
+5. Control Camera:
+   - "Start recording"
+   - "Take a snapshot"
+   - "Enable motion detection"

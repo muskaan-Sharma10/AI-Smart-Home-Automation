@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Home Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section with Navigation -->
+        <div class="header-section">
+            <div class="title-section">
+                <h2>My Devices</h2>
+                <a href="{{ url_for('devices') }}" class="manage-devices-link">Manage Devices</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+            </div>
+        </div>
+
+        <!-- Devices Section -->
+        <div class="devices-section">
+            <div class="devices-grid">
+                {% for device in devices %}
+                <div class="device-card" data-device-id="{{ device.id }}">
+                    <h3>{{ device.name }}</h3>
+                    <p>Type: {{ device.type }}</p>
+                    <p class="device-status">Status: {{ device.state }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="chat-section">
+            <div id="chat-messages" class="chat-messages">
+                <!-- Messages will be added here dynamically -->
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="user-input" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

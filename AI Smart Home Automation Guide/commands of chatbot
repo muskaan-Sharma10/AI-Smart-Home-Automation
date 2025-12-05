@@ -1,0 +1,60 @@
+- "Turn on the lights"
+- "Turn off the lights"
+- "Change lights to red/blue/green/yellow/purple/white"
+- "What's the status of the lights?"
+
+
+- "Set temperature to 72" (any number)
+- "What's the current temperature?"
+- "Check thermostat"
+
+- "Lock the door"
+- "Unlock the door"
+- "Is the door locked?"
+- "Check door status"
+
+- "Turn on/off the fan"
+- "Set fan speed"
+- "Check fan status"
+
+- "Open/Close blinds"
+- "Check blinds status"
+
+- "Turn on/off camera"
+- "Start recording"
+- "Stop recording"
+- "Take picture"
+- "Take snapshot"
+
+- "Enable motion detection"
+- "Disable motion detection"
+- "What's the camera status?"
+
+- "Turn on/off outlet"
+- "Power on/off outlet"
+- "Schedule outlet" (with time)
+- "What's the outlet status?"
+
+- Questions about automation
+- Questions about rules
+- Questions about schedules
+- Questions about routines
+
+- "Turn on/off the speaker"
+- "Power on/off speaker"
+- "Set volume to 50" (0-100)
+- "Mute speaker"
+- "Unmute speaker"
+- "What's the speaker status?"
+
+The chatbot recognizes these keywords for each device type:
+
+Lights: 'light', 'lights', 'lamp', 'bright', 'dim', 'color'
+Temperature: 'temperature', 'thermostat', 'heat', 'cool', 'warm'
+Door: 'door', 'lock', 'unlock', 'entry'
+Speaker: 'speaker', 'volume', 'music', 'play', 'pause', 'stop', 'sound', 'mute'
+Fan: 'fan', 'speed', 'oscillate', 'swing'
+Blinds: 'blind', 'blinds', 'shade', 'shades'
+Camera: 'camera', 'record', 'snapshot', 'motion'
+Outlet: 'outlet', 'plug', 'socket', 'smart plug'
+Automation: 'automation', 'rule', 'schedule', 'routine'

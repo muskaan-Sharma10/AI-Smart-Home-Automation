@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Devices - Smart Home Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="title-section">
+                <h2>Manage Devices</h2>
+            </div>
+            <div class="nav-buttons">
+                <a href="{{ url_for('home') }}" class="nav-button">Back to Home</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="add-device-section">
+                <h3>Add New Device</h3>
+                <form method="POST" class="add-device-form">
+                    <div class="form-group">
+                        <label for="name">Device Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Device Type</label>
+                        <select id="type" name="type" required>
+                            <option value="light">Light</option>
+                            <option value="thermostat">Thermostat</option>
+                            <option value="lock">Lock</option>
+                            <option value="camera">Camera</option>
+                            <option value="speaker">Speaker</option>
+                            <option value="fan">Fan</option>
+                            <option value="blinds">Blinds</option>
+                            <option value="outlet">Smart Outlet</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Add Device</button>
+                </form>
+            </div>
+
+            <div class="devices-list">
+                <h3>Your Devices</h3>
+                <div class="devices-grid">
+                    {% for device in devices %}
+                    {% if device.type == 'speaker' %}
+                    <!-- Speaker Device Card Template -->
+                    <div class="device-card {{ 'active' if device.state == 'on' or device.state == 'playing' }} 
+                         {{ 'state-muted' if device.state == 'muted' }}"
+                         data-device-id="{{ device.id }}"
+                         data-device-type="speaker"
+                         data-volume="{{ device.volume if device.volume else 0 }}">
+                        <div class="speaker-indicator"></div>
+                        <div class="device-info">
+                            <h3>{{ device.name }}</h3>
+                            <p>Type: Speaker</p>
+                            <p class="device-status">Status: {{ device.state|title }}</p>
+                            
+                            <!-- Volume Control -->
+                            <div class="volume-bar">
+                                <div class="volume-bar-fill" style="width: {{ device.volume }}%"></div>
+                            </div>
+                            <div class="volume-level">Volume: {{ device.volume }}%</div>
+                            
+                            <!-- Equalizer Animation -->
+                            <div class="equalizer-bars">
+                                <div class="equalizer-bar"></div>
+                                <div class="equalizer-bar"></div>
+                                <div class="equalizer-bar"></div>
+                                <div class="equalizer-bar"></div>
+                            </div>
+                            
+                            <!-- Speaker Icons -->
+                            <div class="speaker-icons">
+                                <svg class="speaker-icon" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12,3V12.26C11.5,12.09 11,12 10.5,12C8.54,12 6.9,13.26 6.28,15H3V3H12M3,17H6.28C6.9,18.74 8.54,20 10.5,20C12.46,20 14.1,18.74 14.72,17H21V15H14.72C14.1,13.26 12.46,12 10.5,12C8.54,12 6.9,13.26 6.28,15H3V17Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="device-card {{ 'active' if device.state == 'on' or device.state == 'playing' or device.state == 'unlocked' }} 
+                        {{'color-' + device.state.split('_')[1] if device.state.startswith('on_') }}" 
+                        data-device-id="{{ device.id }}">
+                        <div class="device-info">
+                            <h3>{{ device.name }}</h3>
+                            <p>Type: {{ device.type|title }}</p>
+                            <p class="device-status {{ 'status-on' if device.state == 'on' or device.state == 'playing' or device.state == 'unlocked' else 'status-off' }}
+                                {{ 'color-' + device.state.split('_')[1] if device.state.startswith('on_') }}">
+                                Status: {{ device.state|title }}
+                                {% if device.state.startswith('on_') %}
+                                <span class="color-indicator {{ device.state.split('_')[1] }}"></span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="device-actions">
+                            <button class="btn-edit" onclick="editDevice({{ device.id }})">Edit</button>
+                            <button class="btn-delete" onclick="deleteDevice({{ device.id }})">Delete</button>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Device Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Device</h2>
+            <form id="editForm">
+                <input type="hidden" id="editDeviceId" name="deviceId">
+                <div class="form-group">
+                    <label for="editName">Device Name</label>
+                    <input type="text" id="editName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editType">Device Type</label>
+                    <select id="editType" name="type" required>
+                        <option value="light">Light</option>
+                        <option value="thermostat">Thermostat</option>
+                        <option value="lock">Lock</option>
+                        <option value="camera">Camera</option>
+                        <option value="speaker">Speaker</option>
+                        <option value="fan">Fan</option>
+                        <option value="blinds">Blinds</option>
+                        <option value="outlet">Smart Outlet</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/devices.js') }}"></script>
+</body>
+</html>
